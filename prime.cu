@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "quicksort.cuh"
-
+#include <cuda_runtime.h>
 __global__ void generatePrimes(uint64_t limit, uint64_t* primes, uint64_t* count) {
     int i = blockIdx.x * blockDim.x + threadIdx.x + 2;
     int stride = blockDim.x * gridDim.x;
@@ -21,7 +21,7 @@ __global__ void generatePrimes(uint64_t limit, uint64_t* primes, uint64_t* count
         }
         
         if (isPrimeResult) {
-            int index = atomicAdd(count, 1);
+            uint64_t index = (*count)++;
             primes[index] = i;
         }
         
@@ -43,8 +43,9 @@ int main() {
     generatePrimes<<<gridSize, blockSize>>>(limit, primes, count);
     cudaDeviceSynchronize();
 
+    remove("output.txt");
     // Open the output file in append mode
-    FILE* outputFile = fopen("output.txt", "a");
+    FILE* outputFile = fopen("output.txt", "a+");
     if (outputFile == NULL) {
         printf("Failed to open the output file.\n");
         return 1;
