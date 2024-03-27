@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "quicksort.cuh"
 #include <cuda_runtime.h>
-__global__ void generatePrimes(uint64_t limit, uint64_t* primes, uint64_t * count) {
+__global__ void generatePrimes(uint64_t limit, uint64_t* primes, uint64_t count) {
     int i = blockIdx.x * blockDim.x + threadIdx.x + 2;
     int stride = blockDim.x * gridDim.x;
     
@@ -23,7 +23,8 @@ __global__ void generatePrimes(uint64_t limit, uint64_t* primes, uint64_t * coun
         
 
         if (isPrimeResult) {
-            int index = atomicAdd(count, 1);
+            count += 1;
+            int index = count;
             primes[index] = i;
         }
         
@@ -40,7 +41,7 @@ int main() {
     uint64_t* count;
     cudaMallocManaged(&primes, limit * sizeof(uint64_t));
     cudaMallocManaged(&count, sizeof(uint64_t));
-    uint64_t count = 0;
+    *count = 0;
     
     generatePrimes<<<gridSize, blockSize>>>(limit, primes, count);
     cudaDeviceSynchronize();
