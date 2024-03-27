@@ -1,35 +1,31 @@
-#include <stdint.h>
-#include <stddef.h>
+#include <cstdint>
 
-void swap(uint64_t * a, uint64_t * b) {
-    uint64_t t = *a;
-    *a = *b;
-    *b = t;
+void swap(uint64_t& a, uint64_t& b) {
+    uint64_t temp = a;
+    a = b;
+    b = temp;
 }
 
-uint64_t partition(uint64_t array[], uint64_t low, uint64_t high) {
+int partition(uint64_t arr[], int low, int high) {
+    uint64_t pivot = arr[high];
+    int i = low - 1;
 
-    uint64_t pivot = array[high];
-    uint64_t i = (low - 1);
-
-    for (uint64_t j = low; j < high; j++) {
-        if (array[j] <= pivot) {
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
             i++;
-            swap(&array[i], &array[j]);
+            swap(arr[i], arr[j]);
         }
     }
 
-    swap(&array[i + 1], &array[high]);
-    return (i + 1);
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
 }
 
-void quickSort(uint64_t array[], uint64_t low, uint64_t high) {
+void quicksort(uint64_t arr[], int low, int high) {
     if (low < high) {
+        int pi = partition(arr, low, high);
 
-        uint64_t pi = partition(array, low, high);
-
-        quickSort(array, low, pi - 1);
-
-        quickSort(array, pi + 1, high);
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
     }
 }
