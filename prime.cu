@@ -52,8 +52,8 @@ int main() {
         printf("Failed to open the output file.\n");
         return 1;
     }
-    
-    //quicksort(primes, 0, limit - 1);
+    uint64_t size = *count;
+    quicksort(primes, 0, size - 1);
 
     // Print the prime numbers to the output file
     for (int i = 0; i < *count; i++) {
