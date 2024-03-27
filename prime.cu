@@ -32,7 +32,7 @@ __global__ void generatePrimes(uint64_t limit, uint64_t* primes, int * count) {
 }
 
 int main() { 
-    const uint64_t limit = 100000000;
+    const uint64_t limit = 100 000 000;
     int blockSize = 256;
     int gridSize = (limit - 2 + blockSize - 1) / blockSize;
     
