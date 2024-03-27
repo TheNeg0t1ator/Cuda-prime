@@ -51,7 +51,7 @@ int main() {
         return 1;
     }
     
-    quicksort(primes, 0, limit - 1);
+    //quicksort(primes, 0, limit - 1);
 
     // Print the prime numbers to the output file
     for (int i = 0; i < *count; i++) {
