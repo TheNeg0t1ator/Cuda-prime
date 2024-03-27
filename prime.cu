@@ -20,8 +20,10 @@ __global__ void generatePrimes(uint64_t limit, uint64_t* primes, uint64_t* count
             }
         }
         
+        
+
         if (isPrimeResult) {
-            uint64_t index = (*count)++;
+            int index = atomicAdd(count, 1);
             primes[index] = i;
         }
         
@@ -55,7 +57,7 @@ int main() {
 
     // Print the prime numbers to the output file
     for (int i = 0; i < *count; i++) {
-        fprintf(outputFile, "%I64d\n", primes[i]);
+        fprintf(outputFile, "%lu\n", primes[i]);
     }
     
     // Close the output file
