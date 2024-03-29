@@ -24,7 +24,7 @@ __device__ void swap(uint64_t* a, uint64_t* b) { // Modified swap function
     *b = temp;
 }
 
-__device__ void quicksort(uint64_t arr[][1000], uint64_t low, uint64_t high)
+__device__ void quicksort(uint64_t arr[][1000], uint64_t low, uint64_t high);
 
 __global__ void quicksort_kernel(uint64_t arr[][1000], uint64_t low, uint64_t high) {
     int threadId = threadIdx.x;

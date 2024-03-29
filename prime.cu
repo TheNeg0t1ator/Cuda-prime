@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "quicksort.cuh"
 #include <cuda_runtime.h>
-__global__ void quicksort(uint64_t arr[][1000], uint64_t low, uint64_t high);
+
 
 __global__ void generatePrimes(uint64_t limit, uint64_t* primes, int * count) {
     int i = blockIdx.x * blockDim.x + threadIdx.x + 2;
